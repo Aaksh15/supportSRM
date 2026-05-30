@@ -92,6 +92,39 @@ npm run dev
 
 The app runs at `http://localhost:5173`.
 
+## Deploy Frontend To Vercel
+
+Vercel is recommended for the React frontend. Keep the FastAPI backend deployed separately, then set `VITE_API_BASE_URL` to the backend URL in Vercel.
+
+1. Push this project to GitHub.
+2. Create a new Vercel project from the repository.
+3. Set the Vercel root directory to:
+
+```text
+support-crm/frontend
+```
+
+4. Use these Vercel settings:
+
+```text
+Framework Preset: Vite
+Build Command: npm run build
+Output Directory: dist
+Install Command: npm install
+```
+
+5. Add this environment variable in Vercel:
+
+```env
+VITE_API_BASE_URL=https://your-backend-url
+```
+
+6. Deploy.
+
+The included `frontend/vercel.json` rewrites all frontend routes to `index.html`, so pages like `/dashboard`, `/tickets`, and `/analytics` work after refresh.
+
+Important: the FastAPI + SQLite backend should not be deployed as-is to Vercel because SQLite writes are not persistent in Vercel serverless functions. Deploy the backend to Railway, Render, or another persistent server first.
+
 ## Environment Variables
 
 Backend:
